@@ -568,24 +568,24 @@ if [[ -z "${EXTENSIONS##*,xdebug,*}" ]]; then
         installExtensionFromTgz xdebug-2.5.5
     fi
 fi
-
-if [[ -z "${EXTENSIONS##*,event,*}" ]]; then
-    echo "---------- Install event ----------"
-    apk add --no-cache libevent-dev
-    export is_sockets_installed=$(php -r "echo extension_loaded('sockets');")
-
-    if [[ "${is_sockets_installed}" = "" ]]; then
-        echo "---------- event is depend on sockets, install sockets first ----------"
-        docker-php-ext-install sockets
-    fi
-
-    echo "---------- Install event again ----------"
-    mkdir event
-    tar -xf event-3.0.8.tgz -C event --strip-components=1
-    cd event && phpize && ./configure && make  && make install
-
-    docker-php-ext-enable --ini-name event.ini event
-fi
+#与lumen版本 冲突
+#if [[ -z "${EXTENSIONS##*,event,*}" ]]; then
+#    echo "---------- Install event ----------"
+#    apk add --no-cache libevent-dev
+#    export is_sockets_installed=$(php -r "echo extension_loaded('sockets');")
+#
+#    if [[ "${is_sockets_installed}" = "" ]]; then
+#        echo "---------- event is depend on sockets, install sockets first ----------"
+#        docker-php-ext-install sockets
+#    fi
+#
+#    echo "---------- Install event again ----------"
+#    mkdir event
+#    tar -xf event-3.0.8.tgz -C event --strip-components=1
+#    cd event && phpize && ./configure && make  && make install
+#
+#    docker-php-ext-enable --ini-name event.ini event
+#fi
 
 if [[ -z "${EXTENSIONS##*,mongodb,*}" ]]; then
     echo "---------- Install mongodb ----------"
